@@ -37,14 +37,49 @@ document.querySelectorAll(".btn-toggle-pass").forEach((btn) => {
 });
 
 async function api(url, options = {}) {
-  const res = await fetch(url, {
-    credentials: "include",
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    ...options
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.message || "Request failed.");
-  return data;
+  const isStatic = window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+  try {
+    const res = await fetch(url, {
+      credentials: "include",
+      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+      ...options
+    });
+    if (!res.ok) {
+      if ((res.status === 404 || res.status === 405) && isStatic) {
+        return mockAuth(url, options);
+      }
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.message || "Request failed.");
+    }
+    return await res.json();
+  } catch (err) {
+    if (isStatic || err.message.includes("Failed to fetch")) {
+      return mockAuth(url, options);
+    }
+    throw err;
+  }
+}
+
+function mockAuth(url, options = {}) {
+  const body = JSON.parse(options.body || "{}");
+  if (url === "/api/auth/login") {
+    const isStaff = body.email.toLowerCase().includes("admin");
+    const u = {
+      authenticated: true,
+      user: { fullName: isStaff ? "Staff Administrator" : "Eleanor Vance", email: body.email, role: isStaff ? "admin" : "guest" }
+    };
+    localStorage.setItem("haven_user", JSON.stringify(u));
+    return { success: true, message: "Signed in successfully!", redirect: isStaff ? "admin.html" : "index.html" };
+  }
+  if (url === "/api/auth/register") {
+    const u = {
+      authenticated: true,
+      user: { fullName: body.fullName || "Guest", email: body.email, role: "guest" }
+    };
+    localStorage.setItem("haven_user", JSON.stringify(u));
+    return { success: true, message: "Account created successfully!", redirect: "index.html" };
+  }
+  return { success: true, message: "Operation completed." };
 }
 
 function showAlert(elId, text, isError = false) {

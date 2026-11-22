@@ -19,15 +19,120 @@ const SERVICE_ICONS = {
   "Spa & Massage": "🌿"
 };
 
+const MOCK_ROOMS = [
+  { RoomID: 1, RoomNumber: "101", RoomType: "Standard Non-AC", PricePerNight: 1200, Capacity: 2, Status: "Available" },
+  { RoomID: 2, RoomNumber: "102", RoomType: "Standard AC", PricePerNight: 1600, Capacity: 2, Status: "Available" },
+  { RoomID: 3, RoomNumber: "201", RoomType: "Deluxe AC", PricePerNight: 2200, Capacity: 3, Status: "Available" },
+  { RoomID: 4, RoomNumber: "202", RoomType: "Family Room", PricePerNight: 3000, Capacity: 4, Status: "Available" }
+];
+
+const MOCK_SERVICES = [
+  { ServiceID: 1, ServiceName: "Room Service", Description: "Food and refreshments delivered to your room.", Price: 250 },
+  { ServiceID: 2, ServiceName: "Laundry Service", Description: "Convenient laundry and ironing service.", Price: 150 },
+  { ServiceID: 3, ServiceName: "Airport Transfer", Description: "Pre-booked airport pickup and drop service.", Price: 800 },
+  { ServiceID: 4, ServiceName: "Travel Assistance", Description: "Help with local sightseeing and travel information.", Price: 0 }
+];
+
+function isStaticHosting() {
+  return window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+}
+
+function handleMockApi(url, options = {}) {
+  const method = (options.method || "GET").toUpperCase();
+  if (url.startsWith("/api/rooms/available")) {
+    const params = new URLSearchParams(url.split("?")[1] || "");
+    const guests = parseInt(params.get("guests") || "1", 10);
+    return MOCK_ROOMS.filter(r => r.Capacity >= guests);
+  }
+  if (url.startsWith("/api/rooms")) {
+    return MOCK_ROOMS;
+  }
+  if (url.startsWith("/api/services")) {
+    return MOCK_SERVICES;
+  }
+  if (url === "/api/auth/me") {
+    const stored = localStorage.getItem("haven_user");
+    return stored ? JSON.parse(stored) : { authenticated: false };
+  }
+  if (url === "/api/auth/login") {
+    const b = JSON.parse(options.body || "{}");
+    const u = { authenticated: true, user: { fullName: b.email.split("@")[0] || "Guest", email: b.email, role: "guest" } };
+    localStorage.setItem("haven_user", JSON.stringify(u));
+    return { success: true, user: u.user };
+  }
+  if (url === "/api/auth/register") {
+    const b = JSON.parse(options.body || "{}");
+    const u = { authenticated: true, user: { fullName: b.fullName || "Guest", email: b.email, role: "guest" } };
+    localStorage.setItem("haven_user", JSON.stringify(u));
+    return { success: true, user: u.user };
+  }
+  if (url === "/api/reservations" && method === "POST") {
+    const b = JSON.parse(options.body || "{}");
+    const resId = Math.floor(1000 + Math.random() * 9000);
+    const booking = {
+      ReservationID: resId,
+      GuestName: b.fullName || "Guest",
+      Email: b.email,
+      RoomType: "Deluxe AC",
+      RoomNumber: "201",
+      CheckIn: b.checkIn,
+      CheckOut: b.checkOut,
+      Amount: b.totalAmount || 3200,
+      BookingStatus: "Confirmed",
+      PaymentStatus: "Pending"
+    };
+    const all = JSON.parse(localStorage.getItem("haven_bookings") || "[]");
+    all.unshift(booking);
+    localStorage.setItem("haven_bookings", JSON.stringify(all));
+    return {
+      success: true,
+      reservationId: resId,
+      totalAmount: b.totalAmount || 3200,
+      paymentUrl: `payment.html?reservationId=${resId}&email=${encodeURIComponent(b.email)}`
+    };
+  }
+  if (url.startsWith("/api/my-bookings")) {
+    const all = JSON.parse(localStorage.getItem("haven_bookings") || "[]");
+    if (!all.length) {
+      all.push({
+        ReservationID: 1042,
+        GuestName: "Eleanor Vance",
+        Email: "guest@havenhotel.in",
+        RoomType: "Deluxe AC",
+        RoomNumber: "201",
+        CheckIn: "2026-11-25",
+        CheckOut: "2026-11-27",
+        Amount: 4400,
+        BookingStatus: "Confirmed",
+        PaymentStatus: "Paid"
+      });
+    }
+    return all;
+  }
+  return { success: true };
+}
+
 async function api(url, options = {}) {
-  const response = await fetch(url, {
-    credentials: "include",
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    ...options
-  });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.message || "Something went wrong.");
-  return data;
+  try {
+    const response = await fetch(url, {
+      credentials: "include",
+      headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+      ...options
+    });
+    if (!response.ok) {
+      if ((response.status === 404 || response.status === 405) && isStaticHosting()) {
+        return handleMockApi(url, options);
+      }
+      const data = await response.json().catch(() => ({}));
+      throw new Error(data.message || "Something went wrong.");
+    }
+    return await response.json();
+  } catch (err) {
+    if (isStaticHosting() || err.message.includes("Failed to fetch")) {
+      return handleMockApi(url, options);
+    }
+    throw err;
+  }
 }
 
 function money(value) {

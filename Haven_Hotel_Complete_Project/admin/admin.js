@@ -63,18 +63,74 @@ function getRoomStatusBadge(status) {
   return `<span style="display:inline-block;padding:3px 9px;border-radius:9999px;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;${style}">${escapeHtml(status)}</span>`;
 }
 
+const MOCK_ADMIN_DASHBOARD = { rooms: 4, guests: 1, reservations: 1, pendingPayments: 0 };
+const MOCK_ADMIN_RESERVATIONS = [{
+  ReservationID: 1042,
+  GuestName: "Eleanor Vance",
+  Email: "guest@havenhotel.in",
+  Phone: "+91 98765 43210",
+  RoomType: "Deluxe AC",
+  RoomNumber: "201",
+  CheckIn: "2026-11-25",
+  CheckOut: "2026-11-27",
+  Amount: 4400,
+  BookingStatus: "Confirmed",
+  PaymentStatus: "Paid"
+}];
+const MOCK_ADMIN_ROOMS = [
+  { RoomID: 1, RoomNumber: "101", RoomType: "Standard Non-AC", PricePerNight: 1200, Capacity: 2, Status: "Available" },
+  { RoomID: 2, RoomNumber: "102", RoomType: "Standard AC", PricePerNight: 1600, Capacity: 2, Status: "Available" },
+  { RoomID: 3, RoomNumber: "201", RoomType: "Deluxe AC", PricePerNight: 2200, Capacity: 3, Status: "Available" },
+  { RoomID: 4, RoomNumber: "202", RoomType: "Family Room", PricePerNight: 3000, Capacity: 4, Status: "Available" }
+];
+const MOCK_ADMIN_SERVICES = [
+  { ServiceID: 1, ServiceName: "Room Service", Description: "Food and refreshments delivered to your room.", Price: 250 },
+  { ServiceID: 2, ServiceName: "Laundry Service", Description: "Convenient laundry and ironing service.", Price: 150 },
+  { ServiceID: 3, ServiceName: "Airport Transfer", Description: "Pre-booked airport pickup and drop service.", Price: 800 },
+  { ServiceID: 4, ServiceName: "Travel Assistance", Description: "Help with local sightseeing and travel information.", Price: 0 }
+];
+const MOCK_ADMIN_GUESTS = [
+  { GuestID: 1, FullName: "Eleanor Vance", Email: "guest@havenhotel.in", Phone: "+91 98765 43210" }
+];
+const MOCK_ADMIN_PAYMENTS = [
+  { PaymentID: 501, ReservationID: 1042, GuestName: "Eleanor Vance", Amount: 4400, PaymentMethod: "UPI", PaymentStatus: "Paid" }
+];
+
+function handleAdminMockApi(url, options = {}) {
+  if (url === "/api/dashboard") return MOCK_ADMIN_DASHBOARD;
+  if (url === "/api/reservations") return MOCK_ADMIN_RESERVATIONS;
+  if (url === "/api/rooms") return MOCK_ADMIN_ROOMS;
+  if (url === "/api/services") return MOCK_ADMIN_SERVICES;
+  if (url === "/api/guests") return MOCK_ADMIN_GUESTS;
+  if (url === "/api/payments") return MOCK_ADMIN_PAYMENTS;
+  return { success: true };
+}
+
 async function api(url, options = {}) {
-  const response = await fetch(url, {
-    headers: { "Content-Type": "application/json" },
-    ...options
-  });
-  const data = await response.json().catch(() => ({}));
-  if (response.status === 401) {
-    window.location.href = "/admin-login";
-    throw new Error("Admin session expired.");
+  const isStatic = window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+  try {
+    const response = await fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      ...options
+    });
+    if (!response.ok) {
+      if ((response.status === 404 || response.status === 401) && isStatic) {
+        return handleAdminMockApi(url, options);
+      }
+      if (response.status === 401) {
+        window.location.href = "admin-login.html";
+        throw new Error("Admin session expired.");
+      }
+      const data = await response.json().catch(() => ({}));
+      throw new Error(data.message || "Request failed.");
+    }
+    return await response.json();
+  } catch (err) {
+    if (isStatic || err.message.includes("Failed to fetch")) {
+      return handleAdminMockApi(url, options);
+    }
+    throw err;
   }
-  if (!response.ok) throw new Error(data.message || "Request failed.");
-  return data;
 }
 
 async function loadDashboard() {

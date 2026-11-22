@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secure Settlement | Haven Hotel New Delhi</title>
-  <link rel="stylesheet" href="/payment.css">
+  <link rel="stylesheet" href="payment.css">
 </head>
 <body>
 
   <header class="checkout-header">
-    <a class="logo" href="/">HAVEN<span>.</span></a>
+    <a class="logo" href="index.html">HAVEN<span>.</span></a>
     <div style="display:flex;align-items:center;gap:12px;">
-      <a id="paymentUserBadge" href="/#mybooking" style="display:none;font-size:12px;font-weight:600;color:var(--pine-900);background:var(--linen-200);padding:6px 14px;border-radius:6px;border:1px solid var(--linen-border);text-decoration:none;"></a>
+      <a id="paymentUserBadge" href="index.html#mybooking" style="display:none;font-size:12px;font-weight:600;color:var(--pine-900);background:var(--linen-200);padding:6px 14px;border-radius:6px;border:1px solid var(--linen-border);text-decoration:none;"></a>
       <div class="secure-badge">
         <span>🔒</span> 256-Bit Bank-Grade Encrypted Settlement
       </div>
@@ -195,6 +195,29 @@
           $("statusBadge").className = "status-pill-box pending";
         }
       } catch (err) {
+        const isStatic = window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+        if (isStatic || err.message.includes("Failed to fetch") || err.message.includes("404") || err.message.includes("credentials")) {
+          bookingData = {
+            room_type: "Deluxe AC",
+            room_number: "201",
+            full_name: (email && email.includes("@")) ? email.split("@")[0] : "Eleanor Vance",
+            check_in: "2026-11-25",
+            check_out: "2026-11-27",
+            reservation_id: reservationId || "1042",
+            amount: 4400,
+            payment_status: "Pending"
+          };
+          $("roomTypeHeading").textContent = bookingData.room_type;
+          $("roomNumberText").textContent = `Suite #${bookingData.room_number}`;
+          $("guestNameText").textContent = bookingData.full_name;
+          $("stayDatesText").textContent = `${bookingData.check_in} → ${bookingData.check_out}`;
+          $("reservationIdText").textContent = `#${bookingData.reservation_id}`;
+          $("totalAmountText").textContent = money(bookingData.amount);
+          $("paymentStatusText").textContent = bookingData.payment_status;
+          $("statusBadge").className = "status-pill-box pending";
+          $("continueButton").disabled = false;
+          return;
+        }
         showStatus(err.message, true);
         $("continueButton").disabled = true;
       }
@@ -212,7 +235,16 @@
           </div>
         `;
       } catch (_) {
-        container.innerHTML = "<p>Could not load QR code.</p>";
+        container.innerHTML = `
+          <div class="qr-card">
+            <div style="width:160px;height:160px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;border:2px dashed #b8dfcb;border-radius:8px;padding:8px;">
+              <span style="font-size:38px;">📱</span>
+              <span style="font-size:11px;font-weight:700;color:#196140;margin-top:4px;">DEMO UPI QR</span>
+              <span style="font-size:9px;color:#718096;">havenhotel@upi</span>
+            </div>
+            <span class="qr-note">Simulated UPI Demo</span>
+          </div>
+        `;
       }
     }
 
@@ -378,6 +410,15 @@
         showStatus(result.message || "Settlement completed successfully! We look forward to welcoming you.");
         button.textContent = "Payment Completed ✓";
       } catch (err) {
+        const isStatic = window.location.hostname.includes("github.io") || window.location.protocol === "file:";
+        if (isStatic || err.message.includes("Failed to fetch") || err.message.includes("404")) {
+          $("paymentStatusText").textContent = "Completed ✓";
+          $("statusBadge").className = "status-pill-box completed";
+          bookingData.payment_status = "Completed";
+          showStatus("Settlement simulated successfully! Reservation is confirmed.");
+          button.textContent = "Payment Completed ✓";
+          return;
+        }
         showStatus(err.message, true);
         button.disabled = false;
         button.textContent = `Try Again with ${selectedMethod}`;
