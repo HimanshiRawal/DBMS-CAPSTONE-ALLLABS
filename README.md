@@ -19,8 +19,11 @@ Update reservation, room and payment statuses.
 Add rooms and services.
 Important notes
 The project is named Haven Hotel.
-It uses Hotel Woodland Deluxe, Paharganj, New Delhi only as a real-world location/reference for the academic project. Haven Hotel is not affiliated with that hotel.
-The QR shown on the payment page is a demonstration QR, not a real UPI QR. The "Simulate successful payment" button only changes the local project database status. It does not collect or transfer money.
+It uses Hotel Woodland Deluxe, Paharganj, New Delhi only as a real-world location/reference for the academic project.
+Haven Hotel is not affiliated with that hotel.
+The QR shown on the payment page is a demonstration QR, not a real UPI QR.
+The "Simulate successful payment" button only changes the local project database status. 
+It does not collect or transfer money.
 The admin credentials below are starter credentials. Change them in .env before showing or deploying the project.
 The built-in Express session MemoryStore is suitable for a local classroom demo, not production deployment.
 Step 1: Install Node.js
@@ -100,7 +103,11 @@ Check that the server terminal has no SQL errors.
 Confirm that sample rows exist in rooms and services.
 Open http://localhost:3000/api/health to check that the server is responding.
 Suggested viva explanation
-"Haven Hotel is a web-based hotel management system developed using HTML, CSS, JavaScript, Node.js, Express and MySQL. It has a public customer website and a separate protected admin dashboard. Customers can view rooms, check date-wise availability, create reservations, view their booking and use a simulated payment flow. The admin can manage rooms, services, reservations and payment statuses. MySQL stores the records, and Express exposes REST APIs. The booking operation uses a database transaction and checks overlapping reservations to reduce the chance of double booking."
+"Haven Hotel is a web-based hotel management system developed using HTML, CSS, JavaScript, Node.js, Express and MySQL.
+It has a public customer website and a separate protected admin dashboard.
+Customers can view rooms, check date-wise availability, create reservations, view their booking and use a simulated payment flow. 
+The admin can manage rooms, services, reservations and payment statuses. MySQL stores the records, and Express exposes REST APIs. 
+The booking operation uses a database transaction and checks overlapping reservations to reduce the chance of double booking."
 
 Project structure
 Haven_Hotel_Complete_Project/
