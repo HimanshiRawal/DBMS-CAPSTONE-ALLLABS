@@ -4,9 +4,9 @@ A full-stack hotel management and room reservation system built using **HTML5, C
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
-### 🛎️ Customer Website & Guest Portal
+###  Customer Website & Guest Portal
 - **Unified Authentication**: Dedicated luxury guest & staff authentication page (`/auth` or `/login`) with dual tabs for **Sign In** and **Create Account**.
 - **Secure Password Hashing**: Utilizes `bcryptjs` with salt rounds to protect guest credentials in MongoDB.
 - **Session-Aware Booking**: Automatically recognizes logged-in guests, pre-fills their details, and provides quick navigation to their active reservations.
@@ -18,7 +18,7 @@ A full-stack hotel management and room reservation system built using **HTML5, C
 - **My Booking Lookup**: Search reservations by Reservation ID and registered email.
 - **Instant Booking Cancellation**: Cancel active bookings directly from the portal.
 
-### 🛡️ Protected Admin Dashboard
+###  Protected Admin Dashboard
 - **Secure Admin Authentication**: Session-backed login with timing-safe credential verification.
 - **Live Statistics Overview**: Total rooms, registered guests, reservations count, and pending payments count.
 - **Reservation Management**: Filter and change booking status (`Confirmed`, `Checked In`, `Checked Out`, `Cancelled`).
@@ -29,7 +29,7 @@ A full-stack hotel management and room reservation system built using **HTML5, C
 
 ---
 
-## 📂 Project Architecture
+##  Project Architecture
 
 ```text
 Haven_Hotel_Complete_Project/
@@ -68,7 +68,7 @@ Haven_Hotel_Complete_Project/
 
 ---
 
-## 🍃 MongoDB Data Models
+##  MongoDB Data Models
 
 1. **Room (`rooms`)**:
    - `room_id`: Numeric unique identifier (e.g. 1, 2, 3...)
@@ -112,7 +112,7 @@ Haven_Hotel_Complete_Project/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - **Node.js**: v18+ (v20+ recommended)
@@ -162,7 +162,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing the Booking Workflow
+##  Testing the Booking Workflow
 
 1. Open [http://localhost:3000/](http://localhost:3000/).
 2. Select Check-In and Check-Out dates (e.g., today and tomorrow).
@@ -174,6 +174,6 @@ npm run dev
 
 ---
 
-## 🎤 Suggested Viva / Presentation Explanation
+##  Suggested Viva / Presentation Explanation
 
 > *"Haven Hotel is a full-stack hotel management web application built with Node.js, Express, and MongoDB using Mongoose ODM. It features a public-facing customer portal and a protected administrative dashboard. The customer portal allows guests to view accommodations, check live date-wise room availability with overlap protection, create reservations, and complete simulated payments. The admin dashboard provides real-time business metrics, room and service management, and reservation lifecycle tracking. MongoDB stores the documents with indexes on search keys, and atomic counters are used for human-readable reservation numbers."*
