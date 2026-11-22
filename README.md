@@ -109,26 +109,3 @@ Customers can view rooms, check date-wise availability, create reservations, vie
 The admin can manage rooms, services, reservations and payment statuses. MySQL stores the records, and Express exposes REST APIs. 
 The booking operation uses a database transaction and checks overlapping reservations to reduce the chance of double booking."
 
-Project structure
-Haven_Hotel_Complete_Project/
-├── admin/
-│   ├── index.html
-│   ├── admin.css
-│   └── admin.js
-├── database/
-│   └── hotel_management.sql
-├── public/
-│   ├── customer.html
-│   ├── customer.css
-│   ├── customer.js
-│   ├── payment.html
-│   ├── payment.css
-│   ├── payment.js
-│   ├── admin-login.html
-│   ├── admin-login.css
-│   └── admin-login.js
-├── .env.example
-├── .gitignore
-├── package.json
-├── README.md
-└── server.js
