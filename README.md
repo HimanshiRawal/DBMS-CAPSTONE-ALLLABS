@@ -7,11 +7,11 @@ A full-stack Hotel Management & Room Reservation Web Application built with **No
 
 ---
 
-## 🌟 Haven Hotel Management System Overview
+##  Haven Hotel Management System Overview
 
 Haven Hotel is an end-to-end hotel operations and reservation platform featuring both a customer-facing booking portal and a secure administrative management dashboard.
 
-### 🛎️ Customer Website & Guest Portal
+###  Customer Website & Guest Portal
 - **Guest Authentication**: Sign in and registration with password hashing (`bcryptjs`) at `/auth`.
 - **Suite Showcase**: Real-time room viewing across Standard Non-AC, Standard AC, Deluxe AC, and Family Room categories.
 - **Date-Wise Availability**: Dynamic check-in and check-out date filtering with automated double-booking prevention.
@@ -19,7 +19,7 @@ Haven Hotel is an end-to-end hotel operations and reservation platform featuring
 - **Simulated Payment Gateway**: Dynamic UPI QR code generation, Credit/Debit card validation, and Cash on Arrival options.
 - **Reservation Lookup**: Lookup, verify, and cancel active bookings using Reservation ID and registered email.
 
-### 🛡️ Protected Administrative Dashboard
+###  Protected Administrative Dashboard
 - **Role-Based Access**: Session-backed admin authentication with timing-safe verification.
 - **Live Statistics Overview**: Real-time counter of total rooms, registered guests, active reservations, and pending payments.
 - **Reservation Management**: Update booking statuses (`Confirmed`, `Checked In`, `Checked Out`, `Cancelled`).
@@ -29,7 +29,7 @@ Haven Hotel is an end-to-end hotel operations and reservation platform featuring
 
 ---
 
-## 📂 Repository Structure
+##  Repository Structure
 
 ```text
 DBMS-CAPSTONE-ALLLABS/
@@ -56,7 +56,7 @@ DBMS-CAPSTONE-ALLLABS/
 
 ---
 
-## 🍃 Database Architecture (MongoDB Schemas)
+##  Database Architecture (MongoDB Schemas)
 
 1. **Room (`rooms`)**: `room_id`, `room_number`, `room_type`, `price_per_night`, `capacity`, `room_status`
 2. **Guest (`guests`)**: `guest_id`, `full_name`, `email` (unique index), `phone`, `password_hash`
@@ -67,7 +67,7 @@ DBMS-CAPSTONE-ALLLABS/
 
 ---
 
-## 🚀 Quickstart Guide
+##  Quickstart Guide
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v18 or higher)
@@ -119,7 +119,7 @@ npm run dev
 
 ---
 
-## 📑 DBMS Lab Reports & Assignments
+##  DBMS Lab Reports & Assignments
 
 - **Lab 1 (`LAB1.docx`)**: Database design, entity relationship diagrams (ERD), and relational model mapping.
 - **Lab 2 (`LAB2.docx`)**: SQL schema definition (DDL), primary and foreign key constraints, table creation.
