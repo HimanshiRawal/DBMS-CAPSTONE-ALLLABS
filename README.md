@@ -1,111 +1,128 @@
-# DBMS-CAPSTONE-ALLLAB
-Haven Hotel Management System
-A beginner-friendly academic project using HTML, CSS, JavaScript, Node.js, Express and MySQL.
+# DBMS Capstone Portfolio & Haven Hotel Management System
 
-Project features
-Customer website
-Browse rooms and services.
-Check room availability by dates and guest count.
-Make a reservation.
-Continue to a separate demo payment page.
-Look up a booking using reservation ID and email.
-Cancel a confirmed booking.
-View the Google Maps location of the real-world reference hotel.
-Admin dashboard
-Separate admin login.
-Dashboard statistics.
-View reservations, payments and guests.
-Update reservation, room and payment statuses.
-Add rooms and services.
-Important notes
-The project is named Haven Hotel.
-It uses Hotel Woodland Deluxe, Paharganj, New Delhi only as a real-world location/reference for the academic project.
-Haven Hotel is not affiliated with that hotel.
-The QR shown on the payment page is a demonstration QR, not a real UPI QR.
-The "Simulate successful payment" button only changes the local project database status. 
-It does not collect or transfer money.
-The admin credentials below are starter credentials. Change them in .env before showing or deploying the project.
-The built-in Express session MemoryStore is suitable for a local classroom demo, not production deployment.
-Step 1: Install Node.js
-Install the current LTS version of Node.js if it is not already installed.
+A full-stack Hotel Management & Room Reservation Web Application built with **Node.js, Express, MongoDB (via Mongoose), HTML5, CSS3, and JavaScript**, alongside academic DBMS lab submissions.
 
-Open Command Prompt in this project folder and run:
+**Author:** [Himanshi Rawal](https://github.com/HimanshiRawal)  
+**Repository:** [HimanshiRawal/DBMS-CAPSTONE-ALLLABS](https://github.com/HimanshiRawal/DBMS-CAPSTONE-ALLLABS)
 
+---
+
+## 🌟 Haven Hotel Management System Overview
+
+Haven Hotel is an end-to-end hotel operations and reservation platform featuring both a customer-facing booking portal and a secure administrative management dashboard.
+
+### 🛎️ Customer Website & Guest Portal
+- **Guest Authentication**: Sign in and registration with password hashing (`bcryptjs`) at `/auth`.
+- **Suite Showcase**: Real-time room viewing across Standard Non-AC, Standard AC, Deluxe AC, and Family Room categories.
+- **Date-Wise Availability**: Dynamic check-in and check-out date filtering with automated double-booking prevention.
+- **Direct Reservation**: Instant booking workflow with guest contact details.
+- **Simulated Payment Gateway**: Dynamic UPI QR code generation, Credit/Debit card validation, and Cash on Arrival options.
+- **Reservation Lookup**: Lookup, verify, and cancel active bookings using Reservation ID and registered email.
+
+### 🛡️ Protected Administrative Dashboard
+- **Role-Based Access**: Session-backed admin authentication with timing-safe verification.
+- **Live Statistics Overview**: Real-time counter of total rooms, registered guests, active reservations, and pending payments.
+- **Reservation Management**: Update booking statuses (`Confirmed`, `Checked In`, `Checked Out`, `Cancelled`).
+- **Room Management**: Add rooms, update pricing, and toggle maintenance states (`Available`, `Maintenance`, `Unavailable`).
+- **Service Catalog**: Manage amenities and pricing (Room Service, Laundry, Airport Transfer, Travel Assistance).
+- **Payment Auditing**: Track transaction records, methods, and update settlement status.
+
+---
+
+## 📂 Repository Structure
+
+```text
+DBMS-CAPSTONE-ALLLABS/
+├── Haven_Hotel_Complete_Project/   # Complete full-stack web application
+│   ├── admin/                      # Admin dashboard frontend (HTML/CSS/JS)
+│   ├── config/                     # Database connection configuration
+│   ├── database/                   # MongoDB seeding script & SQL schema reference
+│   ├── models/                     # Mongoose data schemas (Room, Guest, Reservation, etc.)
+│   ├── public/                     # Customer portal frontend (Booking, Auth, Payment)
+│   ├── test/                       # Automated test suite
+│   ├── .env.example                # Environment variables template
+│   ├── package.json                # Project dependencies & scripts
+│   ├── README.md                   # Application-specific documentation
+│   └── server.js                   # Express server & REST API endpoints
+├── ASSIGNMENT_3.zip                # Assignment 3 archive
+├── LAB1.docx                       # Lab 1 Report
+├── LAB2.docx                       # Lab 2 Report
+├── LAB3.docx                       # Lab 3 Report
+├── LAB4.docx                       # Lab 4 Report
+├── .gitignore                      # Git ignore rules
+├── package.json                    # Root workspace package runner
+└── README.md                       # Main repository portfolio documentation
+```
+
+---
+
+## 🍃 Database Architecture (MongoDB Schemas)
+
+1. **Room (`rooms`)**: `room_id`, `room_number`, `room_type`, `price_per_night`, `capacity`, `room_status`
+2. **Guest (`guests`)**: `guest_id`, `full_name`, `email` (unique index), `phone`, `password_hash`
+3. **Reservation (`reservations`)**: `reservation_id`, `guest_id`, `room_id`, `check_in`, `check_out`, `booking_date`, `booking_status`
+4. **Payment (`payments`)**: `payment_id`, `reservation_id`, `amount`, `payment_method`, `payment_status`, `payment_date`
+5. **Service (`services`)**: `service_id`, `service_name`, `description`, `service_price`
+6. **Counter (`counters`)**: Atomic sequence counters for human-readable numeric identifiers.
+
+---
+
+## 🚀 Quickstart Guide
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [MongoDB](https://www.mongodb.com/) (Local Community Server or MongoDB Atlas URI)
+
+### 1. Installation
+Clone the repository and install dependencies:
+```bash
+git clone https://github.com/HimanshiRawal/DBMS-CAPSTONE-ALLLABS.git
+cd DBMS-CAPSTONE-ALLLABS/Haven_Hotel_Complete_Project
 npm install
-Step 2: Configure MySQL
-Open MySQL Workbench.
-Open database/hotel_management.sql.
-Run the complete script.
-It creates the HotelManagement database and the five tables if they do not already exist.
-It adds sample rooms and services only when the same room number/service name is not already present.
-If you already have the five tables, do not drop them. Check that their column names match the schema in the SQL file.
+```
 
-Step 3: Create your .env file
-Copy .env.example.
-Rename the copy to .env.
-Put your MySQL password after DB_PASSWORD=.
-Set an admin username and password of your choice.
-Example:
-
+### 2. Environment Setup
+Create a `.env` file inside `Haven_Hotel_Complete_Project/` (reference `.env.example`):
+```env
 PORT=3000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=HotelManagement
-SESSION_SECRET=make-this-a-long-random-secret
+MONGODB_URI=mongodb://127.0.0.1:27017/HotelManagement
+SESSION_SECRET=haven-hotel-secret-key-production
 ADMIN_USERNAME=admin
-ADMIN_PASSWORD=YourStrongPasswordHere
-Do not share your .env file or upload it to GitHub.
+ADMIN_PASSWORD=ChangeThisPassword123!
+```
 
-Step 4: Start the project
-In Command Prompt, inside the project folder, run:
+### 3. Database Seeding (Optional)
+The server auto-seeds initial rooms and services upon first boot. You can also seed manually:
+```bash
+npm run seed
+```
 
+### 4. Running the Application
+Start the server:
+```bash
 npm start
-When the terminal says the server is running, open:
+```
+Or with auto-reload:
+```bash
+npm run dev
+```
 
-Customer website: http://localhost:3000/
-Admin login: http://localhost:3000/admin-login
-Log in using the username and password from your .env file.
+---
 
-Step 5: Test the booking flow
-Open the customer website.
-Select check-in and check-out dates.
-Click Check availability.
-Select one room.
-Enter guest details and click Continue to payment.
-On the payment page, read the demo payment notice and click Simulate successful payment.
-Return to the customer website and use the reservation ID and email to find the booking.
-Open the admin dashboard to see the reservation and payment status.
-Step 6: Test admin access
-Open http://localhost:3000/admin in a private/incognito window.
-You should be redirected to the admin login page.
-Log in with your .env credentials.
-Try logging out. The admin dashboard should no longer be accessible without logging in again.
-Troubleshooting
-MySQL connection error
-Make sure MySQL Server is running.
-Check DB_USER, DB_PASSWORD, and DB_NAME in .env.
-Confirm the database is named HotelManagement.
-Port 3000 is already in use
-Run this in Command Prompt:
+## 🔗 Portals & Default Credentials
 
-netstat -ano | findstr :3000
-Find the PID at the end of the matching line. Check it before stopping anything:
+| Portal | URL | Credentials |
+| :--- | :--- | :--- |
+| **Customer Booking** | `http://localhost:3000/` | Public Access |
+| **Guest Login** | `http://localhost:3000/auth` | **Email:** `guest@havenhotel.in`<br>**Password:** `Guest1234!` |
+| **Admin Dashboard** | `http://localhost:3000/admin-login` | **Username:** `admin`<br>**Password:** `ChangeThisPassword123!` |
 
-tasklist /FI "PID eq YOUR_PID"
-If it is an old Node process for this project, stop it:
+---
 
-taskkill /PID YOUR_PID /F
-Then run npm start again.
+## 📑 DBMS Lab Reports & Assignments
 
-Page opens but rooms/services do not load
-Check that the server terminal has no SQL errors.
-Confirm that sample rows exist in rooms and services.
-Open http://localhost:3000/api/health to check that the server is responding.
-Suggested viva explanation
-"Haven Hotel is a web-based hotel management system developed using HTML, CSS, JavaScript, Node.js, Express and MySQL.
-It has a public customer website and a separate protected admin dashboard.
-Customers can view rooms, check date-wise availability, create reservations, view their booking and use a simulated payment flow. 
-The admin can manage rooms, services, reservations and payment statuses. MySQL stores the records, and Express exposes REST APIs. 
-The booking operation uses a database transaction and checks overlapping reservations to reduce the chance of double booking."
-
+- **Lab 1 (`LAB1.docx`)**: Database design, entity relationship diagrams (ERD), and relational model mapping.
+- **Lab 2 (`LAB2.docx`)**: SQL schema definition (DDL), primary and foreign key constraints, table creation.
+- **Lab 3 (`LAB3.docx`)**: Data manipulation (DML), complex SQL queries, nested subqueries, and join operations.
+- **Lab 4 (`LAB4.docx`)**: Normalization (1NF, 2NF, 3NF, BCNF), indexing, and transaction analysis.
+- **Assignment 3 (`ASSIGNMENT_3.zip`)**: Backend integration and intermediate project submission.

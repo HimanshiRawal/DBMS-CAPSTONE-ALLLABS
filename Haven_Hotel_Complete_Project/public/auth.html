@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest & Staff Access | Haven Hotel New Delhi</title>
+  <link rel="stylesheet" href="/auth.css">
+</head>
+<body>
+
+  <main class="auth-card">
+    <div class="brand-header">
+      <a class="brand-logo" href="/">HAVEN<span>.</span></a>
+      <span class="brand-badge">DELHI HERITAGE SANCTUARY</span>
+    </div>
+
+    <!-- Dual Tab Selector -->
+    <div class="auth-tabs">
+      <button class="tab-btn active" id="tabSignInBtn" type="button">Sign In</button>
+      <button class="tab-btn" id="tabRegisterBtn" type="button">Create Account</button>
+    </div>
+
+    <!-- TAB 1: SIGN IN -->
+    <section class="tab-content active" id="tabSignIn">
+      <h2>Welcome Back</h2>
+      <p class="auth-sub">
+        Sign in to view your itinerary, manage suite reservations, or access staff operations.
+      </p>
+
+      <form id="signInForm">
+        <div class="field">
+          <label for="loginEmail">Email Address, Phone, or Username</label>
+          <div class="input-wrap">
+            <input id="loginEmail" type="text" required placeholder="guest@havenhotel.in or admin" autocomplete="username">
+          </div>
+        </div>
+
+        <div class="field">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <label for="loginPassword" style="margin-bottom:0;">Password</label>
+            <a href="#" id="forgotPassToggle" class="forgot-link">Forgot password?</a>
+          </div>
+          <div class="input-wrap">
+            <input id="loginPassword" type="password" required placeholder="••••••••••••" autocomplete="current-password">
+            <button type="button" class="btn-toggle-pass" data-target="loginPassword">👁️</button>
+          </div>
+        </div>
+
+        <button class="btn-submit-auth" id="signInSubmitBtn" type="submit">Sign In to Haven →</button>
+        <p id="signInAlert" class="alert-message" aria-live="polite"></p>
+
+        <!-- Quick Demo Fill Helpers -->
+        <div class="demo-buttons-wrap">
+          <span class="demo-title">Quick Demo Sign-In:</span>
+          <div class="demo-btns">
+            <button type="button" class="btn-demo-pill" id="fillDemoGuest">
+              👤 Fill Demo Guest
+            </button>
+            <button type="button" class="btn-demo-pill" id="fillDemoAdmin">
+              🛡️ Fill Staff Admin
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Hidden Inline Password Reset -->
+      <form id="resetPassForm" style="display:none;margin-top:20px;padding-top:18px;border-top:1px solid var(--linen-border);">
+        <h3 style="font-size:1.05rem;color:var(--pine-900);margin-bottom:6px;">Reset Account Password</h3>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:14px;">Enter your registered email and your new password.</p>
+        <div class="field">
+          <label for="resetEmail">Registered Email</label>
+          <div class="input-wrap">
+            <input id="resetEmail" type="email" required placeholder="you@example.com">
+          </div>
+        </div>
+        <div class="field">
+          <label for="resetNewPass">New Password (Min 6 Characters)</label>
+          <div class="input-wrap">
+            <input id="resetNewPass" type="password" required minlength="6" placeholder="••••••••••••">
+          </div>
+        </div>
+        <button class="btn-submit-auth" type="submit">Save New Password & Sign In →</button>
+        <p id="resetAlert" class="alert-message" aria-live="polite"></p>
+        <button type="button" id="cancelResetBtn" style="width:100%;background:none;border:none;margin-top:8px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;text-decoration:underline;">
+          ← Cancel and return to sign in
+        </button>
+      </form>
+    </section>
+
+    <!-- TAB 2: CREATE ACCOUNT -->
+    <section class="tab-content" id="tabRegister">
+      <h2>Guest Registration</h2>
+      <p class="auth-sub">
+        Create your guest profile to enjoy seamless suite bookings and manage stay dates.
+      </p>
+
+      <form id="registerForm">
+        <div class="field">
+          <label for="regName">Full Name</label>
+          <div class="input-wrap">
+            <input id="regName" type="text" required placeholder="e.g. Eleanor Vance">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="regEmail">Email Address</label>
+          <div class="input-wrap">
+            <input id="regEmail" type="email" required placeholder="you@example.com">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="regPhone">Phone / WhatsApp Number</label>
+          <div class="input-wrap">
+            <input id="regPhone" type="text" required placeholder="+91 98765 43210">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="regPassword">Create Password (Min 6 Characters)</label>
+          <div class="input-wrap">
+            <input id="regPassword" type="password" required minlength="6" placeholder="••••••••••••">
+            <button type="button" class="btn-toggle-pass" data-target="regPassword">👁️</button>
+          </div>
+        </div>
+
+        <button class="btn-submit-auth" id="regSubmitBtn" type="submit">Complete Registration →</button>
+        <p id="registerAlert" class="alert-message" aria-live="polite"></p>
+
+        <div class="perks-list">
+          <div class="perk-item">
+            <span>✦</span> Direct access to all active and past booking itineraries
+          </div>
+          <div class="perk-item">
+            <span>✦</span> Faster check-in and automated profile pre-fill
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <a class="back-link" href="/">← Return to Hotel Website</a>
+  </main>
+
+  <script src="/auth.js"></script>
+</body>
+</html>

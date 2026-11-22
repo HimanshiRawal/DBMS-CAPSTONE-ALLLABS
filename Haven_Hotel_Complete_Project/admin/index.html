@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Management System | Haven Hotel New Delhi</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand-wrap">
+      <a class="brand" href="/admin">HAVEN<span>.</span></a>
+      <span class="brand-badge">PROPERTY SYSTEM (PMS)</span>
+    </div>
+
+    <p class="nav-label">Navigation</p>
+    <div class="side-links">
+      <a href="#overview">📊 <span>Overview</span></a>
+      <a href="#reservations">🛎️ <span>Reservations</span></a>
+      <a href="#rooms">🛏️ <span>Room Inventory</span></a>
+      <a href="#services">✨ <span>Services</span></a>
+      <a href="#payments">💳 <span>Payments Ledger</span></a>
+      <a href="#guests">👤 <span>Guest Directory</span></a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="user-avatar">AD</div>
+        <div class="user-info">
+          <span class="user-name">Administrator</span>
+          <span class="user-role">Front Desk Operations</span>
+        </div>
+      </div>
+      <button id="logoutButton" class="logout-btn">Log out Session</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-title">
+        <p class="eyebrow" style="color:var(--gold-600);font-size:0.75rem;font-weight:700;letter-spacing:0.14em;">HAVEN HOTEL · NEW DELHI</p>
+        <h1>Property Dashboard</h1>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-open-site" href="/" target="_blank">
+          View Guest Website ↗
+        </a>
+      </div>
+    </header>
+
+    <!-- KPI Metric Cards -->
+    <section id="overview" class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-info">
+          <span class="stat-label">Total Suites</span>
+          <strong id="totalRooms" class="stat-value">—</strong>
+        </div>
+        <div class="stat-icon">🛏️</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-info">
+          <span class="stat-label">Registered Guests</span>
+          <strong id="totalGuests" class="stat-value">—</strong>
+        </div>
+        <div class="stat-icon">👤</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-info">
+          <span class="stat-label">Active Bookings</span>
+          <strong id="totalReservations" class="stat-value">—</strong>
+        </div>
+        <div class="stat-icon">🛎️</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-info">
+          <span class="stat-label">Pending Settlements</span>
+          <strong id="pendingPayments" class="stat-value">—</strong>
+        </div>
+        <div class="stat-icon">⏳</div>
+      </article>
+    </section>
+
+    <!-- Reservations Panel -->
+    <section id="reservations" class="panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">GUEST BOOKINGS</span>
+          <h2>Reservations Ledger</h2>
+        </div>
+        <button class="btn-refresh" data-load="reservations">Refresh Bookings</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Guest Dossier</th>
+              <th>Suite</th>
+              <th>Dates</th>
+              <th>Amount</th>
+              <th>Booking Status</th>
+              <th>Payment Status</th>
+              <th>Lifecycle Action</th>
+            </tr>
+          </thead>
+          <tbody id="reservationsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Rooms Panel -->
+    <section id="rooms" class="panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">INVENTORY</span>
+          <h2>Suites & Rooms</h2>
+        </div>
+      </div>
+
+      <form id="roomForm" class="inline-form">
+        <input id="roomNumber" required placeholder="Room Number (e.g. 301)">
+        <input id="roomType" required placeholder="Suite Type (e.g. Royal Balcony)">
+        <input id="roomPrice" type="number" min="0" required placeholder="Price per Night (₹)">
+        <input id="roomCapacity" type="number" min="1" required placeholder="Max Capacity">
+        <button type="submit">+ Add Suite</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Room No</th>
+              <th>Suite Type</th>
+              <th>Rate / Night</th>
+              <th>Capacity</th>
+              <th>Status</th>
+              <th>Change Status</th>
+            </tr>
+          </thead>
+          <tbody id="roomsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Services Panel -->
+    <section id="services" class="panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">HOSPITALITY AMENITIES</span>
+          <h2>Hotel Services</h2>
+        </div>
+      </div>
+
+      <form id="serviceForm" class="inline-form">
+        <input id="serviceName" required placeholder="Service Name (e.g. Chauffeur)">
+        <input id="serviceDescription" placeholder="Description of service">
+        <input id="servicePrice" type="number" min="0" required placeholder="Price (0 for Free)">
+        <button type="submit">+ Add Service</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Service Name</th>
+              <th>Description</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody id="servicesBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Payments Panel -->
+    <section id="payments" class="panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">FINANCIAL TRANSACTIONS</span>
+          <h2>Payment Ledger</h2>
+        </div>
+        <button class="btn-refresh" data-load="payments">Refresh Ledger</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Res #</th>
+              <th>Guest Name</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Payment Status</th>
+              <th>Change Status</th>
+            </tr>
+          </thead>
+          <tbody id="paymentsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Guests Panel -->
+    <section id="guests" class="panel">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">CUSTOMER RECORDS</span>
+          <h2>Registered Guests</h2>
+        </div>
+        <button class="btn-refresh" data-load="guests">Refresh Directory</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Email Address</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody id="guestsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div id="adminMessage" aria-live="polite"></div>
+  </main>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

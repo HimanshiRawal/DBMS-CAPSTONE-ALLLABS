@@ -1,0 +1,23 @@
+{
+  "name": "dbms-capstone-alllabs",
+  "version": "1.0.0",
+  "description": "Haven Hotel Management System - DBMS Capstone Project & Lab Portfolio",
+  "main": "Haven_Hotel_Complete_Project/server.js",
+  "scripts": {
+    "start": "node Haven_Hotel_Complete_Project/server.js",
+    "dev": "node --watch Haven_Hotel_Complete_Project/server.js",
+    "test": "node Haven_Hotel_Complete_Project/test/run.js",
+    "seed": "node Haven_Hotel_Complete_Project/database/seed.js"
+  },
+  "keywords": [
+    "hotel-management",
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose",
+    "capstone",
+    "dbms"
+  ],
+  "author": "Himanshi Rawal",
+  "license": "ISC"
+}

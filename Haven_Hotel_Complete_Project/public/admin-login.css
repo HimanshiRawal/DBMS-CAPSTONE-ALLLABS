@@ -1,0 +1,172 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --charcoal-950: #12100E;
+  --charcoal-900: #171513;
+  --bronze-600: #8C6D3F;
+  --bronze-500: #A88653;
+  --bronze-400: #C2A26F;
+  --linen-100: #F9F6F0;
+  --linen-border: rgba(168, 134, 83, 0.22);
+  --text-dark: #171513;
+  --text-muted: #6B655D;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top right, rgba(194, 162, 111, 0.12), transparent 40%),
+    linear-gradient(135deg, #1C1916 0%, #100E0C 100%);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--text-dark);
+  padding: 24px;
+}
+
+.login-card {
+  width: min(440px, 100%);
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 44px 38px;
+  box-shadow: 0 24px 60px rgba(23, 21, 19, 0.25);
+  border: 1px solid rgba(194, 162, 111, 0.35);
+  position: relative;
+}
+
+.login-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bronze-500), #EADDC8, var(--bronze-500));
+  border-radius: 12px 12px 0 0;
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--charcoal-900);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--bronze-500);
+}
+
+.login-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--bronze-500);
+  margin-top: 4px;
+}
+
+.login-card h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.65rem;
+  font-weight: 500;
+  color: var(--charcoal-900);
+  margin: 10px 0 4px;
+}
+
+.login-card p.muted {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 26px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--charcoal-900);
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 13px 15px;
+  font-family: inherit;
+  font-size: 0.90rem;
+  border: 1px solid rgba(23, 21, 19, 0.12);
+  border-radius: 6px;
+  background: #F9F6F0;
+  color: var(--text-dark);
+  outline: none;
+  transition: all 0.20s ease;
+}
+
+.form-group input:focus {
+  border-color: var(--bronze-500);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(168, 134, 83, 0.16);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: var(--charcoal-900);
+  color: #FFFFFF;
+  border: 1px solid var(--charcoal-900);
+  border-radius: 6px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.20s ease;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background: #282420;
+  box-shadow: 0 6px 18px rgba(23, 21, 19, 0.14);
+  transform: translateY(-1px);
+}
+
+#loginMessage {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: #8A2B2B;
+  text-align: center;
+  min-height: 18px;
+}
+
+.back-link {
+  display: block;
+  text-align: center;
+  margin-top: 22px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--bronze-600);
+}

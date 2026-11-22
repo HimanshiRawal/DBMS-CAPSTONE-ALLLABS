@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Settlement | Haven Hotel New Delhi</title>
+  <link rel="stylesheet" href="/payment.css">
+</head>
+<body>
+
+  <header class="checkout-header">
+    <a class="logo" href="/">HAVEN<span>.</span></a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a id="paymentUserBadge" href="/#mybooking" style="display:none;font-size:12px;font-weight:600;color:var(--pine-900);background:var(--linen-200);padding:6px 14px;border-radius:6px;border:1px solid var(--linen-border);text-decoration:none;"></a>
+      <div class="secure-badge">
+        <span>🔒</span> 256-Bit Bank-Grade Encrypted Settlement
+      </div>
+    </div>
+  </header>
+
+  <main class="checkout-main">
+    <!-- Stepper Navigation -->
+    <div class="checkout-stepper">
+      <div class="step-item">
+        <span class="step-bubble">✓</span>
+        <span>Suite Selected</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <span class="step-bubble">✓</span>
+        <span>Guest Details</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item active">
+        <span class="step-bubble">3</span>
+        <span>Payment Settlement</span>
+      </div>
+    </div>
+
+    <div class="checkout-grid">
+      <!-- Left Panel: Payment Method Selection & Form -->
+      <section class="panel-card">
+        <h2>Select Payment Method</h2>
+        <p class="subtitle">
+          Choose your preferred method to complete this reservation. This simulation guarantees your reservation without real financial deduction.
+        </p>
+
+        <!-- Method Tabs -->
+        <div class="methods-selector">
+          <div class="method-tab selected" data-method="UPI">
+            <input type="radio" name="paymentMethod" value="UPI" checked>
+            <div class="method-icon">📱</div>
+            <strong class="method-title">UPI / QR Code</strong>
+            <span class="method-desc">Instant App Scan</span>
+          </div>
+
+          <div class="method-tab" data-method="Card">
+            <input type="radio" name="paymentMethod" value="Card">
+            <div class="method-icon">💳</div>
+            <strong class="method-title">Credit / Debit</strong>
+            <span class="method-desc">Visa · Mastercard</span>
+          </div>
+
+          <div class="method-tab" data-method="Cash">
+            <input type="radio" name="paymentMethod" value="Cash">
+            <div class="method-icon">🏨</div>
+            <strong class="method-title">Pay at Hotel</strong>
+            <span class="method-desc">Front Desk Cash</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Details Container -->
+        <div id="methodDetails" class="details-box">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <button id="continueButton" class="btn-continue-action" type="button">
+          Continue with UPI
+        </button>
+
+        <div id="statusBox" class="status-box-notify" aria-live="polite"></div>
+
+        <div style="margin-top:24px;text-align:center;">
+          <a href="/" style="font-size:0.84rem;color:var(--text-muted);text-decoration:none;">
+            ← Return to Hotel Homepage
+          </a>
+        </div>
+      </section>
+
+      <!-- Right Panel: Sticky Stay Summary Dossier -->
+      <aside class="summary-card">
+        <h3>Reservation Summary</h3>
+
+        <div class="summary-room-badge">
+          <strong id="roomTypeHeading">Loading suite details...</strong>
+          <span id="roomNumberText">Room —</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Lead Guest:</span>
+          <strong id="guestNameText">—</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Stay Dates:</span>
+          <strong id="stayDatesText">—</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Booking Reference:</span>
+          <strong id="reservationIdText">#—</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Taxes & Service Fees:</span>
+          <span>Included (GST)</span>
+        </div>
+
+        <div class="summary-row total-row">
+          <span>Total Amount:</span>
+          <span class="total-amount" id="totalAmountText">₹0</span>
+        </div>
+
+        <div id="statusBadge" class="status-pill-box pending">
+          Payment Status: <span id="paymentStatusText">Pending</span>
+        </div>
+
+        <div style="margin-top:20px;font-size:0.75rem;color:var(--text-muted);line-height:1.5;">
+          ✦ <strong>Flexible Cancellation:</strong> Confirmed reservations can be managed or cancelled at any time through our customer portal.
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const params = new URLSearchParams(window.location.search);
+    const reservationId = params.get("reservationId");
+    const email = params.get("email");
+
+    let bookingData = null;
+    let selectedMethod = "UPI";
+    let busy = false;
+
+    function money(val) {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+      }).format(Number(val || 0));
+    }
+
+    function showStatus(text, isError = false) {
+      const box = $("statusBox");
+      box.textContent = text;
+      box.className = "status-box-notify show " + (isError ? "error" : "success");
+    }
+
+    async function api(url, options = {}) {
+      const res = await fetch(url, {
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+        ...options
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message || "Request failed.");
+      return data;
+    }
+
+    async function loadBooking() {
+      if (!reservationId || !email) {
+        showStatus("Missing booking credentials. Please book through the homepage.", true);
+        $("continueButton").disabled = true;
+        return;
+      }
+
+      try {
+        bookingData = await api(
+          `/api/payment-details/${encodeURIComponent(reservationId)}?email=${encodeURIComponent(email)}`
+        );
+
+        $("roomTypeHeading").textContent = bookingData.room_type || "Deluxe Suite";
+        $("roomNumberText").textContent = `Suite #${bookingData.room_number || "—"}`;
+        $("guestNameText").textContent = bookingData.full_name || "—";
+        $("stayDatesText").textContent = `${bookingData.check_in} → ${bookingData.check_out}`;
+        $("reservationIdText").textContent = `#${bookingData.reservation_id}`;
+        $("totalAmountText").textContent = money(bookingData.amount);
+        $("paymentStatusText").textContent = bookingData.payment_status || "Pending";
+
+        if (bookingData.payment_status === "Completed" || bookingData.payment_status === "Paid") {
+          $("statusBadge").className = "status-pill-box completed";
+          $("continueButton").disabled = true;
+          $("continueButton").textContent = "Payment Completed ✓";
+          showStatus("This reservation has already been settled. Thank you!");
+        } else {
+          $("statusBadge").className = "status-pill-box pending";
+        }
+      } catch (err) {
+        showStatus(err.message, true);
+        $("continueButton").disabled = true;
+      }
+    }
+
+    async function loadQR() {
+      const container = $("qrContainer");
+      if (!container) return;
+      try {
+        const data = await api("/api/demo-qr");
+        container.innerHTML = `
+          <div class="qr-card">
+            <img src="${data.qrDataUrl}" alt="Haven Hotel UPI Payment QR">
+            <span class="qr-note">Scan with any UPI App</span>
+          </div>
+        `;
+      } catch (_) {
+        container.innerHTML = "<p>Could not load QR code.</p>";
+      }
+    }
+
+    function renderMethod() {
+      document.querySelectorAll(".method-tab").forEach((tab) => {
+        tab.classList.toggle("selected", tab.dataset.method === selectedMethod);
+      });
+
+      const details = $("methodDetails");
+      const button = $("continueButton");
+      $("statusBox").className = "status-box-notify";
+
+      if (bookingData && (bookingData.payment_status === "Completed" || bookingData.payment_status === "Paid")) {
+        button.disabled = true;
+        button.textContent = "Payment Completed ✓";
+        return;
+      }
+
+      if (selectedMethod === "UPI") {
+        details.innerHTML = `
+          <h3>Instant UPI Settlement</h3>
+          <p>Scan the verified hotel QR code below using Google Pay, PhonePe, Paytm, or any UPI application.</p>
+          <div id="qrContainer">Generating high-resolution QR...</div>
+        `;
+        button.textContent = "Simulate Successful UPI Payment";
+        button.disabled = false;
+        loadQR();
+      } else if (selectedMethod === "Card") {
+        details.innerHTML = `
+          <h3>Credit / Debit Card Authorization</h3>
+          <p>Enter your card credentials below. Our demo processor securely verifies simulated transactions.</p>
+          
+          <div class="virtual-card-preview">
+            <div class="card-top">
+              <div class="card-chip"></div>
+              <span class="card-brand-name">HAVEN HOTEL</span>
+            </div>
+            <div class="card-number-display" id="cardDisplayNumber">•••• •••• •••• ••••</div>
+            <div class="card-bottom">
+              <div>
+                <span class="card-label">Cardholder</span>
+                <span id="cardDisplayName">${(bookingData && bookingData.full_name) || "VALUED GUEST"}</span>
+              </div>
+              <div>
+                <span class="card-label">Expires</span>
+                <span id="cardDisplayExpiry">12/28</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="cardName">Cardholder Name</label>
+            <input id="cardName" type="text" placeholder="Full name on card" value="${(bookingData && bookingData.full_name) || ""}">
+          </div>
+          <div class="field-group">
+            <label for="cardNumber">Card Number</label>
+            <input id="cardNumber" type="text" maxlength="19" placeholder="4532 •••• •••• 8892">
+          </div>
+          <div class="card-row-split">
+            <div class="field-group">
+              <label for="cardExpiry">Expiry Date</label>
+              <input id="cardExpiry" type="text" maxlength="5" placeholder="MM/YY">
+            </div>
+            <div class="field-group">
+              <label for="cardCvv">Security Code (CVV)</label>
+              <input id="cardCvv" type="password" maxlength="4" placeholder="•••">
+            </div>
+          </div>
+        `;
+        button.textContent = "Authorize Card Payment";
+        button.disabled = false;
+
+        // Interactive Live Virtual Card Feedback
+        const numInput = $("cardNumber");
+        const nameInput = $("cardName");
+        const expInput = $("cardExpiry");
+
+        numInput?.addEventListener("input", (e) => {
+          let val = e.target.value.replace(/\D/g, "").slice(0, 16);
+          val = val.replace(/(.{4})/g, "$1 ").trim();
+          e.target.value = val;
+          $("cardDisplayNumber").textContent = val || "•••• •••• •••• ••••";
+        });
+
+        nameInput?.addEventListener("input", (e) => {
+          $("cardDisplayName").textContent = e.target.value.toUpperCase() || "VALUED GUEST";
+        });
+
+        expInput?.addEventListener("input", (e) => {
+          let val = e.target.value.replace(/\D/g, "").slice(0, 4);
+          if (val.length >= 2) val = val.slice(0, 2) + "/" + val.slice(2);
+          e.target.value = val;
+          $("cardDisplayExpiry").textContent = val || "MM/YY";
+        });
+      } else if (selectedMethod === "Cash") {
+        details.innerHTML = `
+          <h3>Pay at Reception (Cash)</h3>
+          <p>You have chosen to settle your stay upon check-in at the hotel front desk.</p>
+          <div style="background:var(--surface-white);padding:18px;border-radius:4px;border:1px solid var(--linen-border);font-size:0.85rem;line-height:1.6;">
+            ✦ Your suite remains held under status <strong>Pending</strong>.<br>
+            ✦ Please present your government ID and booking reference (<strong>#${reservationId}</strong>) upon arrival.
+          </div>
+        `;
+        button.textContent = "Confirm Pay-at-Hotel Reservation";
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll(".method-tab").forEach((tab) => {
+      tab.addEventListener("click", function () {
+        if (busy || (bookingData && (bookingData.payment_status === "Completed" || bookingData.payment_status === "Paid"))) return;
+        selectedMethod = this.dataset.method;
+        renderMethod();
+      });
+    });
+
+    async function continuePayment() {
+      if (busy || !bookingData) return;
+      if (bookingData.payment_status === "Completed" || bookingData.payment_status === "Paid") {
+        showStatus("Payment has already been completed.");
+        return;
+      }
+
+      if (selectedMethod === "Card") {
+        const name = $("cardName") ? $("cardName").value.trim() : "";
+        const number = $("cardNumber") ? $("cardNumber").value.replace(/\s/g, "") : "";
+        const expiry = $("cardExpiry") ? $("cardExpiry").value.trim() : "";
+        const cvv = $("cardCvv") ? $("cardCvv").value.trim() : "";
+
+        if (!name || number.length < 12 || !expiry.includes("/") || cvv.length < 3) {
+          showStatus("Please enter complete simulated card details to authorize.", true);
+          return;
+        }
+      }
+
+      busy = true;
+      const button = $("continueButton");
+      button.disabled = true;
+      button.textContent = "Processing Settlement...";
+
+      try {
+        await api(`/api/payment-method/${encodeURIComponent(reservationId)}`, {
+          method: "POST",
+          body: JSON.stringify({ email, paymentMethod: selectedMethod })
+        });
+
+        if (selectedMethod === "Cash") {
+          $("paymentStatusText").textContent = "Pending (Cash at Desk)";
+          showStatus("Cash payment selected successfully. Please settle at front desk upon arrival.");
+          button.textContent = "Reservation Confirmed (Pay on Arrival)";
+          return;
+        }
+
+        const result = await api(`/api/payment-demo/${encodeURIComponent(reservationId)}`, {
+          method: "POST",
+          body: JSON.stringify({ email })
+        });
+
+        $("paymentStatusText").textContent = "Completed ✓";
+        $("statusBadge").className = "status-pill-box completed";
+        bookingData.payment_status = "Completed";
+
+        showStatus(result.message || "Settlement completed successfully! We look forward to welcoming you.");
+        button.textContent = "Payment Completed ✓";
+      } catch (err) {
+        showStatus(err.message, true);
+        button.disabled = false;
+        button.textContent = `Try Again with ${selectedMethod}`;
+      } finally {
+        busy = false;
+      }
+    }
+
+    $("continueButton").addEventListener("click", continuePayment);
+
+    loadBooking().then(() => {
+      renderMethod();
+    });
+
+    // Check user session
+    (async () => {
+      try {
+        const res = await fetch("/api/auth/me", { credentials: "include" });
+        const data = await res.json();
+        if (data.authenticated && data.user) {
+          const badge = $("paymentUserBadge");
+          if (badge) {
+            const firstName = data.user.name ? data.user.name.split(" ")[0] : "Guest";
+            badge.textContent = `✦ Signed in: ${firstName}`;
+            badge.style.display = "inline-flex";
+          }
+        }
+      } catch (_) {}
+    })();
+  </script>
+</body>
+</html>
