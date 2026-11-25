@@ -1,0 +1,471 @@
+/* ==========================================================================
+   HAVEN HOTEL · LUXURY CHECKOUT & PAYMENT STYLING
+   Aesthetic: Warm Ivory · Soft Champagne · Deep Charcoal · Muted Bronze
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --charcoal-950: #12100E;
+  --charcoal-900: #171513;
+  --charcoal-800: #26221E;
+  --bronze-600: #8C6D3F;
+  --bronze-500: #A88653;
+  --bronze-400: #C2A26F;
+  --bronze-light: #F7F1E5;
+  --linen-100: #F9F6F0;
+  --linen-200: #F3EFE6;
+  --linen-border: rgba(168, 134, 83, 0.22);
+  --text-dark: #171513;
+  --text-muted: #6B655D;
+  --surface-white: #FFFFFF;
+  --shadow-elevated: 0 16px 45px rgba(23, 21, 19, 0.06);
+  --shadow-subtle: 0 4px 20px rgba(23, 21, 19, 0.03);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", -apple-system, sans-serif;
+  background-color: var(--linen-100);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+header.checkout-header {
+  background: var(--surface-white);
+  border-bottom: 1px solid var(--linen-border);
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--charcoal-900);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--bronze-500);
+}
+
+.secure-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #235436;
+  background: #EDF4EE;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(35, 84, 54, 0.20);
+}
+
+main.checkout-main {
+  max-width: 1160px;
+  margin: 45px auto 80px;
+  padding: 0 24px;
+}
+
+.checkout-stepper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.step-item.active {
+  color: var(--charcoal-900);
+}
+
+.step-bubble {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  background: var(--linen-200);
+  color: var(--text-muted);
+}
+
+.step-item.active .step-bubble {
+  background: var(--charcoal-900);
+  color: var(--surface-white);
+}
+
+.step-divider {
+  width: 50px;
+  height: 1px;
+  background: var(--linen-border);
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.panel-card {
+  background: var(--surface-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--linen-border);
+  box-shadow: var(--shadow-elevated);
+  padding: 34px;
+}
+
+.panel-card h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--charcoal-900);
+  margin-bottom: 6px;
+}
+
+.panel-card p.subtitle {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 26px;
+}
+
+/* Payment Method Cards */
+.methods-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.method-tab {
+  border: 1px solid var(--linen-border);
+  border-radius: var(--radius-sm);
+  padding: 16px 10px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--surface-white);
+  transition: all 0.22s ease;
+}
+
+.method-tab:hover {
+  border-color: var(--bronze-500);
+  background: var(--bronze-light);
+}
+
+.method-tab.selected {
+  border: 2px solid var(--charcoal-900);
+  background: #F3EFE6;
+}
+
+.method-tab input {
+  display: none;
+}
+
+.method-icon {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.method-title {
+  display: block;
+  font-weight: 700;
+  font-size: 0.84rem;
+  color: var(--charcoal-900);
+}
+
+.method-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Dynamic details area */
+.details-box {
+  background: var(--linen-100);
+  border: 1px solid var(--linen-border);
+  border-radius: var(--radius-md);
+  padding: 26px;
+  margin-bottom: 26px;
+}
+
+.details-box h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--charcoal-900);
+  margin-bottom: 8px;
+}
+
+.details-box p {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+/* UPI QR Area */
+.qr-card {
+  text-align: center;
+  background: var(--surface-white);
+  border: 1px solid var(--linen-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  max-width: 290px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-subtle);
+}
+
+.qr-card img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.qr-note {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--bronze-600);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Virtual Card Simulation */
+.virtual-card-preview {
+  background: linear-gradient(135deg, #26221E 0%, #171513 100%);
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(23, 21, 19, 0.16);
+  margin-bottom: 24px;
+  border: 1px solid rgba(194, 162, 111, 0.35);
+  font-family: "Plus Jakarta Sans", monospace;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.card-chip {
+  width: 38px;
+  height: 28px;
+  background: linear-gradient(135deg, #EADDC8, #C2A26F);
+  border-radius: 4px;
+}
+
+.card-brand-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--bronze-400);
+}
+
+.card-number-display {
+  font-size: 1.25rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.card-bottom .card-label {
+  font-size: 0.62rem;
+  color: #A69E91;
+  display: block;
+}
+
+.field-group {
+  margin-bottom: 16px;
+}
+
+.field-group label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--charcoal-900);
+  margin-bottom: 6px;
+}
+
+.field-group input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.90rem;
+  border: 1px solid var(--linen-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-white);
+  color: var(--charcoal-900);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.field-group input:focus {
+  border-color: var(--bronze-500);
+  box-shadow: 0 0 0 3px rgba(168, 134, 83, 0.15);
+}
+
+.card-row-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.btn-continue-action {
+  width: 100%;
+  padding: 16px;
+  background: var(--charcoal-900);
+  color: var(--surface-white);
+  border: 1px solid var(--charcoal-900);
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.20s ease;
+  box-shadow: var(--shadow-subtle);
+}
+
+.btn-continue-action:hover:not(:disabled) {
+  background: #282420;
+  box-shadow: 0 6px 18px rgba(23, 21, 19, 0.14);
+  transform: translateY(-1px);
+}
+
+.btn-continue-action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Right Summary Sidebar */
+.summary-panel {
+  background: var(--surface-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--linen-border);
+  box-shadow: var(--shadow-elevated);
+  padding: 30px;
+}
+
+.summary-panel h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--charcoal-900);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--linen-border);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.summary-row strong {
+  color: var(--charcoal-900);
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 16px;
+  border-top: 1px solid var(--linen-border);
+  margin-top: 18px;
+}
+
+.summary-total span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--charcoal-900);
+}
+
+.summary-total .total-amount {
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--charcoal-900);
+}
+
+/* Success Confirmation Overlay */
+.confirmation-card {
+  text-align: center;
+  padding: 40px 30px;
+}
+
+.confirm-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #EDF4EE;
+  color: #235436;
+  border: 1px solid rgba(35, 84, 54, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 20px;
+}
+
+.confirmation-card h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.85rem;
+  color: var(--charcoal-900);
+  margin-bottom: 10px;
+}
+
+.confirmation-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  max-width: 440px;
+  margin: 0 auto 28px;
+}
+
+@media (max-width: 900px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+  .methods-selector {
+    grid-template-columns: 1fr;
+  }
+}

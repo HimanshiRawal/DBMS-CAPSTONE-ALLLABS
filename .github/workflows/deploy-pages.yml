@@ -34,6 +34,7 @@ jobs:
           mkdir -p _site/admin
           cp -r Haven_Hotel_Complete_Project/admin/* _site/admin/
           cp Haven_Hotel_Complete_Project/public/admin.html _site/admin.html || true
+          touch _site/.nojekyll
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3

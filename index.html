@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haven Hotel | Luxury Heritage Boutique Hotel in New Delhi</title>
+  <meta name="description" content="Experience refined tranquility, bespoke Indian hospitality, and handcrafted suites in central New Delhi at Haven Hotel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="customer.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice">
+    <div class="notice-left">
+      <span>BESPOKE HOSPITALITY</span> Hotel Woodland Deluxe Reference Property · Paharganj, New Delhi
+    </div>
+    <div class="notice-right" id="topNoticeRight">
+      <a href="tel:+911123581000">☎ +91 11 2358 1000</a>
+      <a href="#location">📍 Directions</a>
+      <a href="admin-login.html">Staff Access</a>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="navbar">
+    <div class="logo-wrap">
+      <a class="logo" href="#home">HAVEN<span>.</span></a>
+      <span class="logo-sub">DELHI HERITAGE SANCTUARY</span>
+    </div>
+
+    <nav class="main-nav">
+      <a href="#home">Home</a>
+      <a href="#about">Sanctuary</a>
+      <a href="#rooms">Suites</a>
+      <a href="#booking">Reserve</a>
+      <a href="#services">Amenities</a>
+      <a href="#mybooking">My Booking</a>
+      <a href="#location">Neighborhood</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="btn-admin" id="authNavBtn" href="auth.html">Sign In / Register</a>
+      <a class="btn-reserve-nav" href="#booking">Reserve A Suite</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <div class="eyebrow-pill">
+          ✦ CENTRAL NEW DELHI HERITAGE SANCTUARY
+        </div>
+        <h1>An Oasis of Quiet Elegance in the <em>Heart of Delhi</em></h1>
+        <p class="hero-desc">
+          Understated luxury, bespoke personal care, and handcrafted rooms designed for the discerning global traveler — moments from Connaught Place and New Delhi Station.
+        </p>
+
+        <div class="hero-highlights">
+          <div class="hero-highlight-item">
+            <span class="icon">✓</span> <span>Soundproofed Private Suites</span>
+          </div>
+          <div class="hero-highlight-item">
+            <span class="icon">✓</span> <span>24/7 Culinary Room Service</span>
+          </div>
+          <div class="hero-highlight-item">
+            <span class="icon">✓</span> <span>Complimentary High-Speed Wi-Fi</span>
+          </div>
+          <div class="hero-highlight-item">
+            <span class="icon">✓</span> <span>Airport Chauffeur Service</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Concierge Quick-Check Bar -->
+    <div class="booking-bar-wrapper">
+      <div class="booking-panel booking-bar">
+        <div class="booking-field">
+          <label for="heroCheckIn">Arrival Date</label>
+          <input type="date" id="heroCheckIn">
+        </div>
+        <div class="booking-field">
+          <label for="heroCheckOut">Departure Date</label>
+          <input type="date" id="heroCheckOut">
+        </div>
+        <div class="booking-field">
+          <label for="heroGuests">Guests</label>
+          <select id="heroGuests">
+            <option value="1">1 Guest (Solo)</option>
+            <option value="2" selected>2 Guests (Couple / Twin)</option>
+            <option value="3">3 Guests (Deluxe)</option>
+            <option value="4">4 Guests (Family Suite)</option>
+          </select>
+        </div>
+        <button class="btn-check-rates" id="heroSearchBtn" type="button">
+          Check Rates <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Philosophy & Heritage Section -->
+    <section class="philosophy-section no-card" id="about">
+      <div class="philosophy-grid">
+        <div class="philosophy-copy">
+          <span class="eyebrow">THE HAVEN PHILOSOPHY</span>
+          <h2>Where Delhi’s Energy Meets Serene Restraint</h2>
+          <p>
+            Rooted in Paharganj’s historic thoroughfare, Haven Hotel was envisioned as a tranquil sanctuary where modern international voyagers find repose away from the city’s lively pulse.
+          </p>
+          <p>
+            Every detail — from our 400-thread Egyptian cotton beddings to custom teak wood joinery and acoustic isolation — is calibrated to offer effortless restoration after exploring Delhi’s ancient monuments and bustling bazaars.
+          </p>
+
+          <div class="pillars-grid">
+            <div class="pillar-item">
+              <div class="pillar-icon">🌿</div>
+              <h4>Curated Tranquility</h4>
+              <p>Double-glazed acoustic windows and natural linen textiles ensure deep, restful sleep.</p>
+            </div>
+            <div class="pillar-item">
+              <div class="pillar-icon">🏛️</div>
+              <h4>Strategic Center</h4>
+              <p>5 minutes to New Delhi Station and 10 minutes to the imperial architecture of Connaught Place.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="philosophy-visual">
+          <div class="visual-frame">
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80" alt="Haven Hotel Interior Suite Architecture" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accommodations & Suites Showcase -->
+    <section class="section" id="rooms">
+      <div class="section-head">
+        <span class="eyebrow">OUR PRIVATE COLLECTION</span>
+        <h2>Suites & Accommodations</h2>
+        <p>Each suite pairs natural materials and architectural warmth with modern conveniences, crafted for supreme comfort.</p>
+      </div>
+
+      <div id="roomList" class="room-grid">
+        <p class="muted" style="text-align:center;grid-column:1/-1;">Loading curated suites...</p>
+      </div>
+    </section>
+
+    <!-- Interactive Concierge Reservation Studio -->
+    <section class="section reservation-section" id="booking">
+      <div class="reservation-container">
+        <div class="reservation-intro">
+          <span class="eyebrow">DIRECT BOOKING STUDIO</span>
+          <h2>Secure Your Reservation</h2>
+          <p>
+            Select your preferred arrival and departure dates to check real-time availability. Our reservation engine holds your suite directly in our property database with zero intermediaries.
+          </p>
+
+          <div class="form-group">
+            <label for="checkIn">Check-in Date</label>
+            <input type="date" id="checkIn" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkOut">Check-out Date</label>
+              <input type="date" id="checkOut" required>
+            </div>
+            <div class="form-group">
+              <label for="guestsCount">Occupancy</label>
+              <select id="guestsCount">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn-secondary-search" id="searchRooms" type="button">
+            Check Available Suites
+          </button>
+
+          <div id="availableRooms"></div>
+
+          <div class="security-seal">
+            <div class="seal-icon">🛡️</div>
+            <p>
+              <strong>Direct Reservation Guarantee:</strong> Your booking is recorded instantly in our secure database. Proceed to our simulated settlement portal to choose between UPI, Card, or Pay at Hotel.
+            </p>
+          </div>
+        </div>
+
+        <div class="form-panel card">
+          <h3>Guest Dossier</h3>
+          <p class="panel-sub">Please enter the lead guest's contact details for registration.</p>
+
+          <form id="bookingForm">
+            <div class="form-group">
+              <label for="guestName">Full Name</label>
+              <input id="guestName" required maxlength="120" placeholder="e.g. Eleanor Vance">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input id="email" type="email" required placeholder="you@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone / WhatsApp Number</label>
+              <input id="phone" required maxlength="30" placeholder="+91 98765 43210">
+            </div>
+
+            <button class="btn-submit-booking" type="submit">
+              Confirm & Continue to Payment →
+            </button>
+
+            <p id="bookingMessage" class="message-box" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hotel Services & Amenities -->
+    <section class="section services-section" id="services">
+      <div class="section-head">
+        <span class="eyebrow">CURATED HOSPITALITY</span>
+        <h2>Hotel Services & Amenities</h2>
+        <p>Thoughtful touches and attentive services curated to elevate every moment of your Delhi stay.</p>
+      </div>
+
+      <div id="serviceList" class="service-grid">
+        <p class="muted" style="text-align:center;grid-column:1/-1;">Loading hotel services...</p>
+      </div>
+    </section>
+
+    <!-- My Booking Itinerary Lookup -->
+    <section class="section lookup-section" id="mybooking">
+      <div class="lookup-card card">
+        <div class="section-head">
+          <span class="eyebrow">STAY MANAGEMENT</span>
+          <h2>Retrieve Your Itinerary</h2>
+          <p>Access your reservation record, review stay dates, or process a booking cancellation.</p>
+        </div>
+
+        <form id="lookupForm" class="lookup-form">
+          <input id="reservationId" type="number" min="1" required placeholder="Reservation ID (e.g. 1)">
+          <input id="lookupEmail" type="email" required placeholder="Registered Email Address">
+          <button class="btn-lookup" type="submit">Find Booking</button>
+        </form>
+
+        <div id="lookupResult" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Location & Neighborhood Section -->
+    <section class="section location-section" id="location">
+      <div class="section-head">
+        <span class="eyebrow">THE NEIGHBORHOOD</span>
+        <h2>In the Heart of Delhi</h2>
+        <p>A quiet enclave with uncompromised connectivity across the National Capital Region.</p>
+      </div>
+
+      <div class="location-layout">
+        <div class="location-card card">
+          <h3>Paharganj, New Delhi</h3>
+          <p>
+            Reference property: <strong>Hotel Woodland Deluxe</strong>, 8235/6 Multani Dhanda, Arakashan Road, Paharganj, New Delhi 110055, India.
+          </p>
+
+          <div class="transit-list">
+            <div class="transit-item">
+              <span class="place">🚆 New Delhi Railway Station (NDLS)</span>
+              <span class="time">5 Mins (800m)</span>
+            </div>
+            <div class="transit-item">
+              <span class="place">🏛️ Connaught Place (Rajiv Chowk)</span>
+              <span class="time">10 Mins (2.2km)</span>
+            </div>
+            <div class="transit-item">
+              <span class="place">✈️ Indira Gandhi Int'l Airport (DEL)</span>
+              <span class="time">35 Mins (16km)</span>
+            </div>
+            <div class="transit-item">
+              <span class="place">🕌 Red Fort & Chandni Chowk</span>
+              <span class="time">15 Mins (3.8km)</span>
+            </div>
+          </div>
+
+          <a class="btn-secondary-search" style="display:inline-block;text-align:center;text-decoration:none;" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Hotel+Woodland+Deluxe%2C+8235%2F6%2C+Arakashan+Road%2C+Paharganj%2C+New+Delhi">
+            Open in Google Maps ↗
+          </a>
+        </div>
+
+        <div class="map-container">
+          <iframe
+            title="Google Maps Location for Haven Hotel New Delhi"
+            src="https://www.google.com/maps?q=Hotel%20Woodland%20Deluxe%2C%208235%2F6%2C%20Arakashan%20Road%2C%20Paharganj%2C%20New%20Delhi&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">HAVEN<span>.</span></div>
+        <p>
+          A quiet heritage sanctuary in central New Delhi. Understated architecture, authentic Indian warmth, and refined hospitality.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Accommodations</h4>
+        <ul>
+          <li><a href="#rooms">Standard Rooms</a></li>
+          <li><a href="#rooms">Deluxe AC Suites</a></li>
+          <li><a href="#rooms">Family Residences</a></li>
+          <li><a href="#booking">Check Availability</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hospitality</h4>
+        <ul>
+          <li><a href="#services">In-Room Dining</a></li>
+          <li><a href="#services">Airport Chauffeur</a></li>
+          <li><a href="#services">Heritage Tours</a></li>
+          <li><a href="#mybooking">Manage My Stay</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hotel Inquiries</h4>
+        <ul>
+          <li><a href="tel:+911123581000">+91 11 2358 1000</a></li>
+          <li><a href="mailto:concierge@havenhotel.in">concierge@havenhotel.in</a></li>
+          <li><a href="#location">Paharganj, New Delhi</a></li>
+          <li><a href="admin-login.html">Staff Administration</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Haven Hotel. Academic & Hospitality Project. Reference property: Hotel Woodland Deluxe, Paharganj.</span>
+      <span>Powered by Node.js & MongoDB · <a href="admin-login.html">Staff Login</a></span>
+    </div>
+  </footer>
+
+  <!-- Quick Sign In / Registration Modal -->
+  <div class="auth-modal-backdrop" id="authModalBackdrop" aria-hidden="true">
+    <div class="auth-modal-card">
+      <button class="modal-close-btn" id="modalCloseBtn" type="button" aria-label="Close modal">✕</button>
+      
+      <div style="text-align:center;margin-bottom:20px;">
+        <span style="font-family:var(--font-serif);font-size:1.5rem;font-weight:600;color:var(--color-primary);letter-spacing:0.1em;display:block;">HAVEN<span style="color:var(--color-accent);">.</span></span>
+        <span style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--color-muted);font-weight:600;">GUEST &amp; STAFF RECOGNITION</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--color-surface-tint);padding:4px;border-radius:6px;margin-bottom:20px;">
+        <button class="modal-tab-btn active" id="modalTabSignInBtn" type="button">Sign In</button>
+        <button class="modal-tab-btn" id="modalTabRegBtn" type="button">Register</button>
+      </div>
+
+      <!-- Modal Sign In Tab -->
+      <form id="modalSignInForm">
+        <div class="form-group">
+          <label for="modalLoginEmail">Email Address, Phone, or Username</label>
+          <input id="modalLoginEmail" type="text" required placeholder="guest@havenhotel.in or admin">
+        </div>
+        <div class="form-group">
+          <label for="modalLoginPassword">Password</label>
+          <input id="modalLoginPassword" type="password" required placeholder="••••••••••••">
+        </div>
+        <button class="btn-check-rates" style="width:100%;height:48px;min-height:48px;font-size:12px;margin-top:6px;" type="submit">
+          Sign In to Haven →
+        </button>
+        <p id="modalSignInAlert" class="message-box" style="margin-top:12px;display:none;"></p>
+
+        <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--color-border);text-align:center;">
+          <span style="font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:6px;">Quick Fill Demo:</span>
+          <div style="display:flex;gap:6px;justify-content:center;">
+            <button type="button" id="modalDemoGuest" style="background:var(--color-surface-tint);border:1px solid var(--color-border);padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:600;cursor:pointer;color:var(--color-primary);">👤 Eleanor Vance</button>
+            <button type="button" id="modalDemoAdmin" style="background:var(--color-surface-tint);border:1px solid var(--color-border);padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:600;cursor:pointer;color:var(--color-primary);">🛡️ Administrator</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Modal Register Tab -->
+      <form id="modalRegForm" style="display:none;">
+        <div class="form-group">
+          <label for="modalRegName">Full Name</label>
+          <input id="modalRegName" type="text" required placeholder="e.g. Eleanor Vance">
+        </div>
+        <div class="form-group">
+          <label for="modalRegEmail">Email Address</label>
+          <input id="modalRegEmail" type="email" required placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label for="modalRegPhone">Phone / WhatsApp</label>
+          <input id="modalRegPhone" type="text" required placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label for="modalRegPass">Password (Min 6 Characters)</label>
+          <input id="modalRegPass" type="password" required minlength="6" placeholder="••••••••••••">
+        </div>
+        <button class="btn-check-rates" style="width:100%;height:48px;min-height:48px;font-size:12px;margin-top:6px;" type="submit">
+          Create Account &amp; Sign In →
+        </button>
+        <p id="modalRegAlert" class="message-box" style="margin-top:12px;display:none;"></p>
+      </form>
+
+      <div style="margin-top:16px;text-align:center;">
+        <a href="auth.html" style="font-size:11px;color:var(--color-muted);text-decoration:underline;">
+          Open Fullscreen Sign In Page ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="customer.js"></script>
+</body>
+</html>
